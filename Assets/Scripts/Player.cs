@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Boat
 {
-    [SerializeField] private Transform[] movePositions;
-    [SerializeField] private float moveTime = 0.5f;
-
-    private int moveIndex = 1;
-    private Vector2 targetPos = Vector2.zero;
-    private Vector2 currVel;
-
-    private void Update()
+    protected override void UpdatePosition()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -19,7 +12,5 @@ public class Player : MonoBehaviour
             moveIndex = Mathf.Clamp(moveIndex + moveDir, 0, movePositions.Length - 1);
             targetPos = movePositions[moveIndex].position;
         }
-
-        transform.position = Vector2.SmoothDamp(transform.position, targetPos, ref currVel, moveTime);
     }
 }
