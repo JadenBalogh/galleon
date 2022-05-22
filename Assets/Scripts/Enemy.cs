@@ -6,6 +6,7 @@ public class Enemy : Boat
 {
     [SerializeField] private float minIdleTime = 2f;
     [SerializeField] private float maxIdleTime = 4f;
+    [SerializeField] private int cannonDirection = 1;
 
     private bool canMove = true;
 
@@ -29,5 +30,6 @@ public class Enemy : Boat
         float idleTime = moveTime + Random.Range(minIdleTime, maxIdleTime);
         yield return new WaitForSeconds(idleTime);
         canMove = true;
+        FireCannon(cannonDirection);
     }
 }
