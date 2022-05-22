@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    [SerializeField] private int scoreOnKill = 20;
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private EnemyChannel[] enemyChannels;
+
+    private int score = 0;
 
     private void Awake()
     {
@@ -36,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     public void OnEnemySunk(int channel)
     {
+        score += scoreOnKill;
+        scoreText.text = "Score: " + score;
         enemyChannels[channel].HasEnemy = false;
     }
 
