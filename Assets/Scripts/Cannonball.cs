@@ -20,6 +20,11 @@ public class Cannonball : MonoBehaviour
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
     public void Fire(string sourceTag, Vector2 velocity)
     {
         gameObject.tag = sourceTag;

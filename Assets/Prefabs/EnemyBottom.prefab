@@ -130,6 +130,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   moveTime: 2.5
+  wreckageSprite: {fileID: 21300000, guid: 3e2f42dc0b966c647a35c1bf611eab3a, type: 3}
+  sunkFloatSpeed: 1.2
   minIdleTime: 2
   maxIdleTime: 4
   cannonDirection: 1
