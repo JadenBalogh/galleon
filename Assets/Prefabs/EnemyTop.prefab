@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3589292596144962824}
   - component: {fileID: 3589292596144962828}
   - component: {fileID: 1437085747083725206}
+  - component: {fileID: -1104119061590281556}
   m_Layer: 0
   m_Name: EnemyTop
   m_TagString: Enemy
@@ -121,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7462fd099111f43909764a07ec03b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wakeAnim: {fileID: 11400000, guid: 04b61a0d1df54f046873406b3d87929a, type: 2}
+  wreckAnim: {fileID: 11400000, guid: 6f8292e13ba0a0146bba7da31cdcab85, type: 2}
   cannonballPrefab: {fileID: 7334742221788203259, guid: 22180eb0e96f80e4aabed3bf4379bb99, type: 3}
   cannonballSpeed: 5
   topCannon: {fileID: 0}
@@ -130,7 +133,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   moveTime: 2.5
-  wreckageSprite: {fileID: 21300000, guid: 3e2f42dc0b966c647a35c1bf611eab3a, type: 3}
   sunkFloatSpeed: 1.2
   minIdleTime: 2
   maxIdleTime: 4
@@ -161,6 +163,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.44, y: 1.61}
   m_EdgeRadius: 0
+--- !u!114 &-1104119061590281556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589292596144962825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe7d9b92ef76af42bac6d92f1b2ca20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5423034368607811103
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,13 +5,14 @@ using UnityEngine.Events;
 
 public abstract class Boat : MonoBehaviour
 {
+    [SerializeField] private Animation2D wakeAnim;
+    [SerializeField] private Animation2D wreckAnim;
     [SerializeField] protected Cannonball cannonballPrefab;
     [SerializeField] protected float cannonballSpeed = 5f;
     [SerializeField] protected Transform topCannon;
     [SerializeField] protected Transform bottomCannon;
     [SerializeField] public Transform[] movePositions;
     [SerializeField] protected float moveTime = 0.5f;
-    [SerializeField] private Sprite wreckageSprite;
     [SerializeField] private float sunkFloatSpeed = 2f;
 
     public int ChannelIndex { get; set; }
@@ -24,12 +25,19 @@ public abstract class Boat : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private new Collider2D collider2D;
+    private Animator2D animator2D;
 
     protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<Collider2D>();
+        animator2D = GetComponent<Animator2D>();
         OnSunk = new UnityEvent<int>();
+    }
+
+    protected virtual void Start()
+    {
+        animator2D.Play(wakeAnim, true);
     }
 
     protected virtual void Update()
@@ -69,7 +77,7 @@ public abstract class Boat : MonoBehaviour
 
         isSunk = true;
         collider2D.isTrigger = true;
-        spriteRenderer.sprite = wreckageSprite;
+        animator2D.Play(wreckAnim, true);
         spriteRenderer.sortingOrder = -1;
         OnSunk.Invoke(ChannelIndex);
     }

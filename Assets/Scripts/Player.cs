@@ -6,9 +6,10 @@ public class Player : Boat
 {
     private const float VIEWPORT_FIRE_VERTICAL_OFFSET = 0.2f;
 
-    private void Start()
+    protected override void Start()
     {
         ChannelIndex = -1;
+        base.Start();
     }
 
     protected override void UpdatePosition()
