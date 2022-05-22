@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private EnemyChannel[] enemyChannels;
 
+    public static bool IsStarted { get; private set; }
+
     private int score = 0;
 
     private void Awake()
@@ -21,10 +23,17 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+
+        IsStarted = false;
     }
 
     private void Update()
     {
+        if (!IsStarted)
+        {
+            return;
+        }
+
         for (int i = 0; i < enemyChannels.Length; i++)
         {
             EnemyChannel channel = enemyChannels[i];
@@ -37,6 +46,11 @@ public class GameManager : MonoBehaviour
                 channel.HasEnemy = true;
             }
         }
+    }
+
+    public static void StartGame()
+    {
+        IsStarted = true;
     }
 
     public void OnEnemySunk(int channel)

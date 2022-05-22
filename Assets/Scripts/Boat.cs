@@ -71,7 +71,7 @@ public abstract class Boat : MonoBehaviour
         cannonball.Fire(gameObject.tag, cannonVel);
     }
 
-    public void Sink()
+    public virtual void Sink()
     {
         if (isSunk) return;
 

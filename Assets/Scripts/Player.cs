@@ -6,6 +6,8 @@ public class Player : Boat
 {
     private const float VIEWPORT_FIRE_VERTICAL_OFFSET = 0.2f;
 
+    [SerializeField] private DeathScreen deathScreen;
+
     protected override void Start()
     {
         ChannelIndex = -1;
@@ -14,6 +16,11 @@ public class Player : Boat
 
     protected override void UpdatePosition()
     {
+        if (!GameManager.IsStarted)
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Fire1"))
         {
             Vector2 viewportPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -28,5 +35,11 @@ public class Player : Boat
                 targetPos = movePositions[moveIndex].position;
             }
         }
+    }
+
+    public override void Sink()
+    {
+        base.Sink();
+        deathScreen.EndGame();
     }
 }
