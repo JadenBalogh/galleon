@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int scoreOnKill = 20;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private EnemyChannel[] enemyChannels;
+    [SerializeField] private Transform[] spawnablePoints;
+    [SerializeField] private GameObject[] spawnablePrefabs;
+    [SerializeField] private float minSpawnableInterval = 2f;
+    [SerializeField] private float maxSpawnableInterval = 8f;
 
     public static bool IsStarted { get; private set; }
 
@@ -27,6 +31,11 @@ public class GameManager : MonoBehaviour
         IsStarted = false;
     }
 
+    private void Start()
+    {
+        StartCoroutine(SpawnableLoop());
+    }
+
     private void Update()
     {
         if (!IsStarted)
@@ -39,13 +48,33 @@ public class GameManager : MonoBehaviour
             EnemyChannel channel = enemyChannels[i];
             if (!channel.HasEnemy)
             {
-                Enemy enemy = Instantiate(channel.enemyPrefab, channel.spawnPosition.position, Quaternion.identity);
+                Debug.Log(channel.enemyPrefabs.Length);
+                Enemy enemyPrefab = channel.enemyPrefabs[Random.Range(0, channel.enemyPrefabs.Length)];
+                Debug.Log(enemyPrefab.name);
+                Enemy enemy = Instantiate(enemyPrefab, channel.spawnPosition.position, Quaternion.identity);
                 enemy.ChannelIndex = i;
                 enemy.movePositions = channel.movePositions;
                 enemy.OnSunk.AddListener(OnEnemySunk);
                 channel.HasEnemy = true;
             }
         }
+    }
+
+    private IEnumerator SpawnableLoop()
+    {
+        while (true)
+        {
+            Transform spawnablePoint = spawnablePoints[Random.Range(0, spawnablePoints.Length)];
+            GameObject spawnablePrefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
+            Instantiate(spawnablePrefab, spawnablePoint.position, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(minSpawnableInterval, maxSpawnableInterval));
+        }
+    }
+
+    public static void AddScore(int extraScore)
+    {
+        instance.score += extraScore;
+        instance.scoreText.text = "Score: " + instance.score;
     }
 
     public static void StartGame()
@@ -55,15 +84,14 @@ public class GameManager : MonoBehaviour
 
     public void OnEnemySunk(int channel)
     {
-        score += scoreOnKill;
-        scoreText.text = "Score: " + score;
+        AddScore(scoreOnKill);
         enemyChannels[channel].HasEnemy = false;
     }
 
     [System.Serializable]
     private class EnemyChannel
     {
-        public Enemy enemyPrefab;
+        public Enemy[] enemyPrefabs;
         public Transform[] movePositions;
         public Transform spawnPosition;
 

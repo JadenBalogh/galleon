@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Cannonball : MonoBehaviour
 {
+    [SerializeField] private int damage = 1;
+
     private new Rigidbody2D rigidbody2D;
 
     private void Awake()
@@ -13,10 +15,19 @@ public class Cannonball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!col.gameObject.CompareTag(gameObject.tag) && col.TryGetComponent<Boat>(out Boat boat))
+        if (!col.gameObject.CompareTag(gameObject.tag))
         {
-            boat.Sink();
-            Destroy(gameObject);
+            if (col.TryGetComponent<Boat>(out Boat boat))
+            {
+                boat.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+
+            if (col.TryGetComponent<Interactable>(out Interactable interactable))
+            {
+                interactable.OnUsed();
+                Destroy(gameObject);
+            }
         }
     }
 
